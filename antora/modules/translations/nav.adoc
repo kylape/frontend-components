@@ -1,0 +1,1 @@
+* xref:translations:index.adoc[translations]

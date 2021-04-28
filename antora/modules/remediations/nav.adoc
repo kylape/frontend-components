@@ -1,0 +1,2 @@
+* xref:remediations:index.adoc[remediations]
+** xref:remediations:remediations.adoc[remediations]

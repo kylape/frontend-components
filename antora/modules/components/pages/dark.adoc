@@ -1,0 +1,42 @@
+== Dark Theme
+
+Switch the theme to Dark
+
+=== Usage
+
+Import Dark Component and wrap your page with it.
+
+Supports `<Main>` and `<PageHeader>`
+
+[source,JSX]
+----
+import React from 'react';
+import { Dark } from '@redhat-cloud-services/frontend-components';
+
+class YourCmp extends React.Component {
+    render() {
+        return (
+            <Dark>
+                <PageHeader>
+                    <PageHeaderTitle title='title'/>
+                <PageHeader>
+                <Main>
+                    . . .
+                </Main>
+
+            </Dark>
+        )
+    }
+}
+----
+
+=== Props
+
+Dark
+
+[source,javascript]
+----
+{
+    children: propTypes.node
+};
+----

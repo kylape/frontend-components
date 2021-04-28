@@ -1,0 +1,1 @@
+* xref:inventory-general-info:index.adoc[inventory-general-info]

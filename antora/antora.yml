@@ -1,0 +1,21 @@
+name: frontend-components
+title: Frontend Components
+version: dev
+nav:
+- modules/ROOT/nav.adoc
+- modules/charts/nav.adoc
+- modules/components/nav.adoc
+- modules/config/nav.adoc
+- modules/demo/nav.adoc
+- modules/docs/nav.adoc
+- modules/eslint-config/nav.adoc
+- modules/inventory-compliance/nav.adoc
+- modules/inventory-general-info/nav.adoc
+- modules/inventory-insights/nav.adoc
+- modules/inventory/nav.adoc
+- modules/notifications/nav.adoc
+- modules/pdf-generator/nav.adoc
+- modules/remediations/nav.adoc
+- modules/rule-components/nav.adoc
+- modules/translations/nav.adoc
+- modules/utils/nav.adoc

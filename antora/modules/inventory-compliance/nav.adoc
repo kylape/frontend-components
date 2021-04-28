@@ -1,0 +1,1 @@
+* xref:inventory-compliance:index.adoc[inventory-compliance]

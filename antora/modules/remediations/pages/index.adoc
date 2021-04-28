@@ -1,0 +1,50 @@
+== RedHat Cloud Services frontend components - remediations
+
+https://badge.fury.io/js/%40redhat-cloud-services%2Ffrontend-components-remediations[image:https://badge.fury.io/js/%40redhat-cloud-services%2Ffrontend-components-remediations.svg[npm version]]
+
+This package exports components to show remediations dialog, button and also export API to be used directly trough this package.
+
+=== Installation
+
+With NPM
+
+[source,bash]
+----
+npm i -S @redhat-cloud-services/frontend-components-remediations
+----
+
+With yarn
+
+[source,bash]
+----
+yarn add @redhat-cloud-services/frontend-components-remediations
+----
+
+This package is dependent on https://www.npmjs.com/package/@redhat-cloud-services/frontend-components-utilities[@redhat-cloud-services/frontend-components-utilities] and https://www.npmjs.com/package/@redhat-cloud-services/frontend-components[@redhat-cloud-services/frontend-components] it will automatically install them trough direct dependencies.
+
+=== Migration guide v2 -> v3
+
+==== Import paths
+
+Absolute import paths have changed. Do not reference CJS or EMS or the file extensions in your import paths
+
+[source,diff]
+----
+-import RemediationButton from '@redhat-cloud-services/frontend-components-remediations/esm/RemediationButton';
+-import RemediationButton from '@redhat-cloud-services/frontend-components-remediations/esm/RemediationButton.js';
++import RemediationButton from '@redhat-cloud-services/frontend-components-remediations/RemediationButton';
+----
+
+==== CSS imports
+
+It is no longer required to import styles. CSS is import automatically with the javascript
+
+[source,diff]
+----
+-import '@redhat-cloud-services/frontend-components-remediations/index.css';
+----
+
+=== Documentation Links
+
+* Usage
+** link:doc/remediations.md[Remediations]

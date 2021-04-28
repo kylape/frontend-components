@@ -1,0 +1,5 @@
+* xref:utils:index.adoc[utils]
+** xref:utils:useInventory.adoc[useInventory]
+** xref:utils:debounce.adoc[debounce]
+** xref:utils:redux.adoc[redux]
+** xref:utils:routerParams.adoc[routerParams]

@@ -1,0 +1,6 @@
+* xref:charts:index.adoc[charts]
+** xref:charts:gauge.adoc[gauge]
+** xref:charts:pie.adoc[pie]
+** xref:charts:matrix.adoc[matrix]
+** xref:charts:donut.adoc[donut]
+** xref:charts:severityLine.adoc[severityLine]

@@ -1,0 +1,5 @@
+* xref:inventory:index.adoc[inventory]
+** xref:inventory:hide_filters.adoc[hide_filters]
+** xref:inventory:inventory.adoc[inventory]
+** xref:inventory:inventory_header.adoc[inventory_header]
+** xref:inventory:custom_fetch.adoc[custom_fetch]

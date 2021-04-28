@@ -1,0 +1,311 @@
+== RedHat Cloud Services frontend components - webpack config
+
+https://badge.fury.io/js/%40redhat-cloud-services%2Ffrontend-components-config[image:https://badge.fury.io/js/%40redhat-cloud-services%2Ffrontend-components-config.svg[npm version]]
+
+* link:#redhat-cloud-services-frontend-components---webpack-config[RedHat Cloud Services frontend components - webpack config]
+** link:#webpack-5[Webpack 5]
+*** link:#removed-features-with-webpack-5[Removed features with webpack 5]
+** link:#useproxy[useProxy]
+*** link:#localchrome[localChrome]
+*** link:#custom-routes[Custom routes]
+**** link:#routes[routes]
+**** link:#routespath[routesPath]
+*** link:#custom-proxy-settings[Custom proxy settings]
+*** link:#chrome-1-environments--application-entry-url[Chrome 1 environments / application entry url]
+**** link:#prod-environment-example[Prod environment example]
+**** link:#multiple-html-entrypoints[Multiple HTML entrypoints]
+**** link:#exact-url[Exact URL]
+*** link:#cookietransform[cookieTransform]
+**** link:#custom-entitlements[custom entitlements]
+*** link:#serving-local-files[Serving local files]
+**** link:#example[Example]
+
+=== Webpack 5
+
+In order to use the new version of webpack and its federated medules you'll have to change your run script to use new https://webpack.js.org/configuration/dev-server/[`webpack serve`].
+
+[source,JS]
+----
+> webpack-dev-server -> webpack serve
+----
+
+You'll also have to update your `webpack-cli` dependency to `>=4.2.0`, this package has `peerDependency` on it so you should see warning in your console.
+
+==== Removed features with webpack 5
+
+The new version of webpack 5 changed plyfills and plugin configs, some packages are outdated, one example is `lodash-webpack-plugin` this plugin is no longer maintain anyways. You should be just fine by installing `lodash` directly, imports can stay the same as before `import get from 'lodash/get`.
+
+=== useProxy
+
+The config provide a way to run your applications without using insights-proxy. Just add `useProxy: true` to your configuration.
+
+[source,jsx]
+----
+const { config: webpackConfig, plugins } = config({
+  rootFolder: resolve(__dirname, '../'),
+  debug: true,
+  useFileHash: false,
+  deployment: process.env.BETA ? 'beta/apps' : 'apps',
+  useProxy: true,
+});
+----
+
+And run your application with following command:
+
+[source,shell]
+----
+NODE_ENV=development BETA=true webpack serve --config config/dev.webpack.config.js
+----
+
+_Path to config can be different_
+
+Then you will find your application running on `https://ci.foo.redhat.com:1337/beta/...`. This works only with *Chrome 2* ready applications.
+
+You can change the environment by setting `betaEnv`, but unless the targeted environment is using Chrome 2.0, it won't work correctly.
+
+==== localChrome
+
+You can also easily run you application with a local build of Chrome by adding `localChrome: <absolute_path_to_chrome_build_folder>`.
+
+[source,jsx]
+----
+  rootFolder: resolve(__dirname, '../'),
+  debug: true,
+  useFileHash: false,
+  deployment: process.env.BETA ? 'beta/apps' : 'apps',
+  useProxy: true,
+  localChrome: process.env.INSIGHTS_CHROME,
+});
+----
+
+[source,shell]
+----
+INSIGHTS_CHROME=/Users/rvsiansk/insights-project/insights-chrome/build/
+----
+
+To check what the proxy is doing with your local chrome settings you can set `proxyVerbose: true`.
+
+==== Custom routes
+
+If you want to serve files or api from different URL you can either pass `routes` to config or `routesPath` for file which exports these routes.
+
+===== routes
+
+[source,JS]
+----
+  rootFolder: resolve(__dirname, '../'),
+  debug: true,
+  useFileHash: false,
+  deployment: process.env.BETA ? 'beta/apps' : 'apps',
+  useProxy: true,
+  routes: {
+      '/config/main.yml': { host: 'http://127.0.0.1:8889' }
+  },
+----
+
+===== routesPath
+
+[source,JS]
+----
+  rootFolder: resolve(__dirname, '../'),
+  debug: true,
+  useFileHash: false,
+  deployment: process.env.BETA ? 'beta/apps' : 'apps',
+  useProxy: true,
+  routesPath: process.env.CONFIG_PATH
+----
+
+[source,shell]
+----
+CONFIG_PATH=/home/khala/Documents/git/RedHatInsights/spandx.config.js
+----
+
+[source,JS]
+----
+module.exports = {
+  routes: {
+    '/api': { host: 'PORTAL_BACKEND_MARKER' },
+    '/config': { host: 'http://127.0.0.1:8889' },
+    '/beta/config': { host: 'http://127.0.0.1:8889' },
+  }
+};
+
+----
+
+==== Custom proxy settings
+
+You can add any additional custom proxy configuration. See https://webpack.js.org/configuration/dev-server/#devserverproxy[Webpack documentation]. Please, provide your configuration as an array of object containing `context` property.
+
+_Example_:
+
+[source,jsx]
+----
+const { config: webpackConfig, plugins } = config({
+  rootFolder: resolve(__dirname, '../'),
+  debug: true,
+  useFileHash: false,
+  deployment: process.env.BETA ? 'beta/apps' : 'apps',
+  useProxy: true,
+  localChrome: process.env.INSIGHTS_CHROME,
+  customProxy: [
+    {
+      context: (path) => path.includes('/api/'),
+      target: 'https://qa.cloud.redhat.com',
+      secure: false,
+      changeOrigin: true,
+      autoRewrite: true,
+      ws: true,
+    },
+  ],
+});
+----
+
+This configuration will redirect all API requests to QA environment, so you can check CI UI with QA data.
+
+[[chrome-1-environments--application-entry-url]]
+==== Chrome 1 environments / application entry url
+
+To run your application in Chrome 1 environment, just add `appUrl` that contains entry url for your application.
+
+[source,jsx]
+----
+const { config: webpackConfig, plugins } = config({
+  rootFolder: resolve(__dirname, '../'),
+  debug: true,
+  useFileHash: false,
+  deployment: process.env.BETA ? 'beta/apps' : 'apps',
+  useProxy: true,
+  appUrl: process.env.BETA ? '/beta/settings/sources' : '/settings/sources'
+});
+----
+
+This settings will redirect all requests to `appUrl` to your local `index.html` file and will replace ESI tags for Chrome.
+
+By default, all subroutes are (`/beta/settings/sources/new`) will be redirected to `index.html`, you can disable this behavior by setting `disableFallback: true`.
+
+===== Prod environment example
+
+[source,jsx]
+----
+const { config: webpackConfig, plugins } = config({
+  rootFolder: resolve(__dirname, '../'),
+  debug: true,
+  useFileHash: false,
+  deployment: process.env.BETA ? 'beta/apps' : 'apps',
+  useProxy: true,
+  betaEnv: 'prod',
+  appUrl: process.env.BETA ? '/beta/settings/sources' : '/settings/sources'
+});
+----
+
+Then go to `https://prod.foo.redhat.com:1337/` and you should be able to login and use your local UI build within production environment.
+
+===== Multiple HTML entrypoints
+
+If your application has multiple HTML entrypoints, you can set an array of values in `appUrl`:
+
+_Following example shows landing-page configuration_
+
+[source,jsx]
+----
+const { config: webpackConfig, plugins } = config({
+  rootFolder: resolve(__dirname, '../'),
+  debug: true,
+  useFileHash: false,
+  deployment: process.env.BETA ? 'beta/apps' : 'apps',
+  useProxy: true,
+  appUrl: ['/beta/maintenance.html', '/beta/'],
+});
+----
+
+===== Exact URL
+
+In default, all requests *containing* your app url are redirected to local file. If you want to check the exact URL, you can do it via `exactUrl`
+
+[source,jsx]
+----
+const { config: webpackConfig, plugins } = config({
+  rootFolder: resolve(__dirname, '../'),
+  debug: true,
+  useFileHash: false,
+  deployment: process.env.BETA ? 'beta/apps' : 'apps',
+  useProxy: true,
+  appUrl: ['/beta/maintenance.html', '/beta/'],
+  exactUrl: true,
+});
+----
+
+`redhat.com/beta/` will be redirected to your local `index.html` file `redhat.com/beta/app` won`t be redirect to any of your local files
+
+In both cases queries and hashes are ignored.
+
+==== cookieTransform
+
+For running local services you can use `cookieTransform` (https://github.com/RedHatInsights/insights-standalone/blob/1eef6cfc21f96304275683d090c6b8178a4d386f/index.js#L8[original function], you can also check https://github.com/RedHatInsights/insights-proxy/blob/1cdbc597681eac51998d8c2dd2dd6b5a2d4d03d6/spandx.config.js#L101[insights-proxy implementation]) in `onProxyReq` function. This function transform `jwt` cookie to `x-hr-identity` header.
+
+[source,jsx]
+----
+const cookieTransform = require('@redhat-cloud-services/frontend-components-config/src/cookieTransform');
+
+onProxyReq: (...args) => {
+    cookieTransform(...args);
+},
+----
+
+Routes passed via `routes` or `routesFile` attributes are using this transform automatically. If you override the `onProxyReq` function, you have to add it back manually.
+
+===== custom entitlements
+
+By default, the same entitlements as in insights-proxy are provided. You can rewrite them via the options object:
+
+[source,jsx]
+----
+cookieTransform(proxyReq, req, res, { entitlements });
+----
+
+You can also modify the whole identity object:
+
+[source,jsx]
+----
+cookieTransform(proxyReq, req, res, { entitlements, identity, user, internal });
+----
+
+==== Serving local files
+
+To serve a local file (such as `cloud-services-config`) you can use `serveLocalFile` function.
+
+_(url, filePath, target = 'https://ci.cloud.redhat.com[https://ci.cloud.redhat.com]') => proxyConfig_
+
+*url*
+
+Url of proxied file, it matches using `path.includes(url)`.
+
+*filePath*
+
+A path to your local file.
+
+*target*
+
+A current target. By default `https://ci.cloud.redhat.com`.
+
+===== Example
+
+[source,jsx]
+----
+const serverLocalFile = require('@redhat-cloud-services/frontend-components-config/src/serveLocalFile');
+
+const { config: webpackConfig, plugins } = config({
+  rootFolder: resolve(__dirname, '../'),
+  debug: true,
+  useFileHash: false,
+  deployment: process.env.BETA ? 'beta/apps' : 'apps',
+  useProxy: true,
+  appUrl: `/beta/settings/applications`,
+  customProxy: [
+    serveLocalFile(
+      '/beta/config/main.yml', // url
+      '/Users/rvsiansk/insights-project/cloud-services-config/main.yml' // localFile path
+    ),
+  ],
+});
+----

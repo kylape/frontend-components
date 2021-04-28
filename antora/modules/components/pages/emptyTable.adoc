@@ -1,0 +1,54 @@
+== Empty Table
+
+Implementation of 'empty table' that can display text for an empty table state
+
+=== Usage
+
+Import EmptyTable and styles from this package.
+
+[source,JSX]
+----
+import React from 'react';
+import { EmptyTable } from '@redhat-cloud-services/frontend-components';
+
+class YourCmp extends React.Component {
+  render() {
+    return (
+        <EmptyTable>
+            // Text describing why table is empty
+        </EmptyTable>
+    )
+  }
+}
+----
+
+==== Center the content
+
+[source,JSX]
+----
+import React from 'react';
+import { EmptyTable } from '@redhat-cloud-services/frontend-components';
+
+class YourCmp extends React.Component {
+  render() {
+    return (
+        <EmptyTable centered>
+            // Text describing why table is empty
+        </EmptyTable>
+    )
+  }
+}
+----
+
+=== Props
+
+EmptyTable
+
+[source,javascript]
+----
+{
+    centered: propTypes.bool,
+    className: propTypes.string,
+    children: propTypes.any
+};
+----

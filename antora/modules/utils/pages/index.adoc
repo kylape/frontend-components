@@ -1,0 +1,103 @@
+== RedHat Cloud Services frontend components - utils
+
+https://badge.fury.io/js/%40redhat-cloud-services%2Ffrontend-components-utilities[image:https://badge.fury.io/js/%40redhat-cloud-services%2Ffrontend-components-utilities.svg[npm version]]
+
+This package exports common functions to be used in other packages.
+
+=== Installation
+
+With NPM
+
+[source,bash]
+----
+npm i -S @redhat-cloud-services/frontend-components-utilities
+----
+
+With yarn
+
+[source,bash]
+----
+yarn add @redhat-cloud-services/frontend-components-utilities
+----
+
+This package is dependent on https://www.npmjs.com/package/@redhat-cloud-services/frontend-components[@redhat-cloud-services/frontend-components] it will automatically installed trough direct dependencies.
+
+=== Migration guide
+
+==== v2 -> v3
+
+==== Import path change
+
+Assets are no longer under `/files` directory but directly at the root of the build directory.
+
+[source,jsx]
+----
+// v2
+import { getRegistry } from '@redhat-cloud-services/frontend-components-utilities/Registry';
+
+// v3
+import { getRegistry } from '@redhat-cloud-services/frontend-components-utilities/Registry';
+----
+
+===== No UMD build
+
+Utils package no longer provides UMD version of the build.
+
+===== RowLoader
+
+RowLoader component is no longer a part of `helpers` file but is now a stand-alone component. Import path has changed.
+
+[source,jsx]
+----
+// v2
+import { RowLoader } from '@redhat-cloud-services/frontend-components-utilities/helpers'
+// v3
+import RowLoader from '@redhat-cloud-services/frontend-components-utilities/RowLoader'
+----
+
+===== SCSS files
+
+SCSS files are now under `styles` directory.
+
+[source,scss]
+----
+/** v2 */
+@import '~@redhat-cloud-services/frontend-components-utilities/styles/all';
+/** v3 */
+@import '~@redhat-cloud-services/frontend-components-utilities/styles/all''
+
+----
+
+===== inventoryDependencies
+
+This module is now deprecated. Use a new Inventory component compatible with chrome 2.0.
+
+===== parseCvssScore
+
+Function `parseCvssScore` has been moved to a stand-alone file. Import path has changed.
+
+[source,jsx]
+----
+// v2
+import { parseCvssScore } from '@redhat-cloud-services/frontend-components-utilities/helpers'
+// v3
+import parseCvssScore from '@redhat-cloud-services/frontend-components-utilities/parseCvssScore'
+----
+
+=== Documentation Links
+
+* Utils
+** link:doc/redux.md[redux]
+** link:doc/routerParams.md[routerParams]
+** link:doc/debounce.md[debounce]
+
+Additionaly it exports these utilities
+
+* AsyncComponent - class to load component via async calls
+* helpers - custom helper functions
+* MiddlewareListener - redux listener on actions, they can fire additional action or be cancelled
+* Registry - reducer registry
+* Deffered - deffered helper function
+* RouterParams - maps route to props
+* interceptors - to be used with axios clients
+* Styles - custom style functions in sass

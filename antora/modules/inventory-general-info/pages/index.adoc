@@ -1,0 +1,23 @@
+== RedHat Cloud Services frontend components - inventory general info
+
+https://badge.fury.io/js/%40redhat-cloud-services%2Ffrontend-components-inventory-general-info[image:https://badge.fury.io/js/%40redhat-cloud-services%2Ffrontend-components-inventory-general-info.svg[npm version]]
+
+This package exports components to show system info page and reducers with actions to fetch and store data.
+
+=== Installation
+
+With NPM
+
+[source,bash]
+----
+npm i -S @redhat-cloud-services/frontend-components-inventory-general-info
+----
+
+With yarn
+
+[source,bash]
+----
+yarn add @redhat-cloud-services/frontend-components-inventory-general-info
+----
+
+This package is dependent on https://www.npmjs.com/package/@redhat-cloud-services/frontend-components-utilities[@redhat-cloud-services/frontend-components-utilities], https://www.npmjs.com/package/@redhat-cloud-services/frontend-components[@redhat-cloud-services/frontend-components] and https://www.npmjs.com/package/@redhat-cloud-services/host-inventory-client[@redhat-cloud-services/host-inventory-client] will automatically install them trough direct dependencies.
