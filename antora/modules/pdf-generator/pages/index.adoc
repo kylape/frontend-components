@@ -96,7 +96,7 @@ class DemoApp extends Component {
                             </Column>
                             <Column/>
                         </Section>
-                        <Section title="Some title" withColumn={false}>
+                        <Section title="Some title" withColumn=\{false}>
                             <Panel title="Some title" description="Nullam mauris massa, ullamcorper vitae magna non, laoreet facilisis orci. Maecenas fringilla neque velit, maximus lobortis ante mattis quis. Vestibulum interdum erat et dui lobortis, nec scelerisque leo ultricies. Maecenas vulputate urna in feugiat ornare. Donec nec bibendum metus">
                                 <PanelItem title="I am title">
                                     8.3
@@ -175,7 +175,6 @@ There are mutliple config options derived from https://react-pdf.org[react-pdf] 
 
 There are multiple components written and preconfigured for you, if you want to write custom components or use something more sophisticated you can use https://react-pdf.org/components[react-pdf/components].
 
-[[1-chart]]
 ===== 1) `Chart`
 
 We are using PF charts as source of truth when rendering charts in PDF. For further prop list and how to use charts please go to https://patternfly-react.surge.sh/patternfly-4/documentation/react/charts/chartdonut[PF Donut chart docs].
@@ -200,7 +199,7 @@ If you want to change the color schema for each chart you can do that by passing
 * `orange`
 * `purple`
 
-====== `Donut`
+*`Donut`*
 
 [source,JSX]
 ----
@@ -216,7 +215,7 @@ import { Chart } from '@redhat-cloud-services/frontend-components-pdf-generator'
 
 image:./doc/donut-chart.png[Chart example]
 
-====== `Pie`
+*`Pie`*
 
 [source,JSX]
 ----
@@ -232,12 +231,10 @@ import { Chart } from '@redhat-cloud-services/frontend-components-pdf-generator'
 
 image:./doc/pie-chart.png[Chart example]
 
-[[2-panel-and-panelitem]]
 ===== 2) `Panel` and `PanelItem`
 
 image:./doc/panel.png[Panel example] image:./doc/panel-2.png[Panel two example]
 
-[[3-section]]
 ===== 3) `Section`
 
 * column type - This component uses flex set to 1 so if you will use section in column type you can insert multiple columns in row.
@@ -255,13 +252,13 @@ import { Section, Column, customTitle } from '@redhat-cloud-services/frontend-co
 
 image:./doc/section.png[Column example]
 
-* row type - Section by default has column type by default, in order to switch it to row you have to pass `withColumn={false}`
+* row type - Section by default has column type by default, in order to switch it to row you have to pass `withColumn=\{false}`
 
 [source,JSX]
 ----
 import { Section, customTitle } from '@redhat-cloud-services/frontend-components-pdf-generator';
 
-<Section title="Some title" withColumn={false}>
+<Section title="Some title" withColumn=\{false}>
     {customTitle('some text')}
 </Section>
 ----

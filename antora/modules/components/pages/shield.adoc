@@ -16,7 +16,7 @@ import { Shield } from '@redhat-cloud-services/frontend-components';
 class YourCmp extends React.Component {
   render() {
     return (
-        <Shield impact={'Critical'} hasTooltip={true} size={'md'} />
+        <Shield impact={'Critical'} hasTooltip=\{true} size={'md'} />
     )
   }
 }

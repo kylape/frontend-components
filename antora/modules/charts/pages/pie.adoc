@@ -13,7 +13,7 @@ let pieValues = [
     ['value4', 40]
 ];
 
-<Pie values={pieValues} identifier='my_cool_pie' withLegend={true} />
+<Pie values={pieValues} identifier='my_cool_pie' withLegend=\{true} />
 ----
 
 === Props

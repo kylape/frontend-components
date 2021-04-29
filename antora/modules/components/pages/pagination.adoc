@@ -11,11 +11,11 @@ Just import this component wherever you want to use it and pass `numberOfItems` 
 import { Pagination } from '@redhat-cloud-services/frontend-components/components/Pagination';
 
 export default () => (
-  <Pagination numberOfItems={100} />
+  <Pagination numberOfItems=\{100} />
 )
 ----
 
-This will redner pagination row with 100 items, first page and 10 items per page. If you want to change page pass umber as `page`props -> `<Pagination numberOfItems={100} page={3}/>`
+This will redner pagination row with 100 items, first page and 10 items per page. If you want to change page pass umber as `page`props -> `<Pagination numberOfItems=\{100} page=\{3}/>`
 
 === Using debounce
 
